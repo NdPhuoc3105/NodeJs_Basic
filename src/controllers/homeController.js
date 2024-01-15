@@ -16,7 +16,7 @@ let getHomepage = (req, res) => {
     });
 
     // render data to page
-    return res.render("index.ejs", { dataUser: JSON.stringify(data) });
+    return res.render("index.ejs", { dataUser: data });
   });
 };
 
