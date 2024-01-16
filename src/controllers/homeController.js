@@ -1,23 +1,25 @@
 // import DB
-import connection from "../configs/connectDB";
+import pool from "../configs/connectDB";
 
-let getHomepage = (req, res) => {
-  // declare a data
-  let data = [];
+let getHomepage = async (req, res) => {
+  // execute log
+  const [row, fields] = await pool.execute("SELECT * FROM users");
 
-  connection.query("SELECT * FROM `users`", function (err, results, fields) {
-    results.map((row) => {
-      data.push({
-        id: row.id,
-        email: row.email,
-        firstName: row.firstName,
-        lastName: row.lastName,
-      });
-    });
+  // render data from DB
+  return res.render("index.ejs", { dataUser: row });
+};
 
-    // render data to page
-    return res.render("index.ejs", { dataUser: data });
-  });
+let getDetailPage = async (req, res) => {
+  // get a userId by params request
+  let userId = req.params.id;
+
+  // use SQL execute to get data from DB
+  const [user] = await pool.execute("SELECT * FROM users WHERE id = ?", [
+    userId,
+  ]);
+
+  // respon data from DB
+  return res.send(JSON.stringify(user));
 };
 
 let getAboutpage = (req, res) => {
@@ -26,5 +28,6 @@ let getAboutpage = (req, res) => {
 
 module.exports = {
   getHomepage: getHomepage,
+  getDetailPage: getDetailPage,
   getAboutpage: getAboutpage,
 };

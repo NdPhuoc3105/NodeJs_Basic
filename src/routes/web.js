@@ -5,6 +5,7 @@ let router = express.Router();
 
 const initWebRoute = (app) => {
   router.get("/", homeController.getHomepage);
+  router.get("/detail/user/:id", homeController.getDetailPage);
   router.get("/about", homeController.getAboutpage);
 
   //   after slash `/` for homeController
