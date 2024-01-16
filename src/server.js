@@ -4,11 +4,15 @@ require("dotenv").config();
 import initWebRoute from "./routes/web";
 
 // connect DB
-import pool from "./configs/connectDB";
+// import pool from "./configs/connectDB";
 
 const app = express();
 const port = process.env.PORT || 8080;
 console.log(">>> check port:", port);
+
+// express config to POST method
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 // view Engine
 configViewEngine(app);

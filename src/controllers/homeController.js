@@ -22,12 +22,23 @@ let getDetailPage = async (req, res) => {
   return res.send(JSON.stringify(user));
 };
 
+let createNewUser = async (req, res) => {
+  console.log("check request", req.body);
+  let { firstName, lastName, email, address } = req.body;
+  await pool.execute(
+    "INSERT INTO users(firstName, lastName, email, address) VALUES(?,?,?,?)",
+    [firstName, lastName, email, address]
+  );
+  return res.redirect("/");
+};
+
 let getAboutpage = (req, res) => {
   return res.send("Hello World From about page!");
 };
 
 module.exports = {
-  getHomepage: getHomepage,
-  getDetailPage: getDetailPage,
-  getAboutpage: getAboutpage,
+  getHomepage,
+  getDetailPage,
+  getAboutpage,
+  createNewUser,
 };

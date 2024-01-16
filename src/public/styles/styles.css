@@ -23,3 +23,26 @@
   background-color: #04AA6D;
   color: white;
 }
+
+.create-user-container{
+  display: flex;
+  flex-direction: column;
+  margin: 10px auto;
+  width: 241px;
+  align-items: center;
+}
+
+.create-user-container div b {
+  display: block;
+  /* margin: 10px 12px; */
+  padding: 12px;
+  font-size: 19px;
+}
+
+.create-user-container input{
+  width: 270px;
+}
+
+.create-user-container button{
+  margin: 17px;
+}
