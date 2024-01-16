@@ -8,13 +8,15 @@
 
 </head>
 <body>
+    <!-- nav bar -->
     <div class="topnav">
         <a class="active" href="#home">Home</a>
         <a href="#news">News</a>
         <a href="#contact">Contact</a>
         <a href="#about">About</a>
     </div>
-      <!-- <%= dataUser %> -->
+
+     <!-- <%= dataUser %> -->
     <div style="padding: 10px;">
         <h2>List Users:</h2>
         <!-- <p>Some content..</p> -->
@@ -34,11 +36,18 @@
                      <td><%= dataUser[i].firstName %></td>
                      <td><%= dataUser[i].lastName %></td>
                      <td>
-                        <button>
-                            <a href="/detail/user/<%= dataUser[i].id %>" target="_blank" rel="noopener noreferrer">details</a>
+                        <div class="btn">
+                            <button>
+                                <a href="/detail/user/<%= dataUser[i].id %>" target="_blank" rel="noopener noreferrer">details</a>
                             </button>
-                        <button>update</button>
-                        <button>delete</button>
+                            <form action="/edit-user/<%= dataUser[i].id %>" method="GET">
+                                <button type="submit">Edit</button>
+                            </form>
+                            <form action="/delete-user" method="POST">
+                                <input type="text" value="<%= dataUser[i].id %>" hidden name="userId"/>
+                                <button type="submit">Delete</button>
+                            </form>
+                        </div>
                      </td>
                    </tr>
                 <% } %>
