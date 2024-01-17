@@ -20,7 +20,7 @@ let getDetailPage = async (req, res) => {
     userId,
   ]);
 
-  // respon data from DB
+  // response data from DB
   return res.send(JSON.stringify(user));
 };
 
