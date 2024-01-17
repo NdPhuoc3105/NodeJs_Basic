@@ -1,8 +1,44 @@
 import express from "express";
 import homeController from "../controllers/homeController";
 
+// upload file
+import multer from "multer";
+import path from "path";
+var appRoot = require("app-root-path");
+
 let router = express.Router();
 
+// handle Upload File
+//
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, appRoot + "/src/public/images");
+  },
+
+  // By default, multer removes file extensions so let's add them back
+  filename: function (req, file, cb) {
+    cb(
+      null,
+      file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+    );
+  },
+});
+
+const imageFilter = function (req, file, cb) {
+  // Accept images only
+  if (!file.originalname.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF)$/)) {
+    req.fileValidationError = "Only image files are allowed!";
+    return cb(new Error("Only image files are allowed!"), false);
+  }
+  cb(null, true);
+};
+
+let upload = multer({
+  storage: storage,
+  fileFilter: imageFilter,
+});
+
+// declare route
 const initWebRoute = (app) => {
   // render table
   router.get("/", homeController.getHomepage);
@@ -23,6 +59,16 @@ const initWebRoute = (app) => {
   //
   // about Page
   router.get("/about", homeController.getAboutpage);
+
+  // upload file page
+  router.get("/upload", homeController.getUploadFilePage);
+
+  // handle Upload File
+  router.post(
+    "/upload-profile-pic",
+    upload.single("profile_pic") /* middle-ware action */,
+    homeController.handleUploadFile
+  );
 
   //   after slash `/` for homeController
   return app.use("/", router);
