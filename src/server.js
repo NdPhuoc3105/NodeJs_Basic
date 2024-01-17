@@ -1,7 +1,7 @@
 import express from "express";
 import configViewEngine from "./configs/viewEngine";
 require("dotenv").config();
-import initWebRoute from "./routes/initWebRoute";
+import initWebRoute from "./routes/web";
 import initApiRoute from "./routes/api";
 
 // connect DB
