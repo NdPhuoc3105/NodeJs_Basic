@@ -68,7 +68,6 @@ let getUploadFilePage = async (req, res) => {
 
 // handle form Upload-file:
 //
-
 let handleUploadFile = async (req, res) => {
   // req.file contains information of uploaded file
   // req.body contains information of text fields, if there were any
@@ -82,6 +81,25 @@ let handleUploadFile = async (req, res) => {
   res.send(
     `You have uploaded this image: <hr/><img src="/images/${req.file.filename}" width="500"><hr /><a href="/upload">Upload another image</a>`
   );
+};
+
+let handleUploadMultipleFiles = async (req, res) => {
+  if (req.fileValidationError) {
+    return res.send(req.fileValidationError);
+  } else if (!req.files) {
+    return res.send("Please select an image to upload");
+  }
+
+  let result = "You have uploaded these images: <hr />";
+  const files = req.files;
+  let index, len;
+
+  // Loop through all the uploaded images and display them on frontend
+  for (index = 0, len = files.length; index < len; ++index) {
+    result += `<img src="/images/${files[index].filename}" width="300" style="margin-right: 20px;">`;
+  }
+  result += '<hr/><a href="/upload">Upload more images</a>';
+  res.send(result);
 };
 
 // Other Page - About
@@ -98,5 +116,6 @@ module.exports = {
   deleteUser,
   getUploadFilePage /* get Upload File Page */,
   handleUploadFile /* handle upload-file */,
+  handleUploadMultipleFiles /* handle upload-multiple-file */,
   getAboutpage,
 };

@@ -35,6 +35,11 @@ const imageFilter = function (req, file, cb) {
 
 let upload = multer({ storage: storage, fileFilter: imageFilter });
 
+let uploadMultipleFiles = multer({
+  storage: storage,
+  fileFilter: imageFilter,
+}).array("multiple_images", 3);
+
 //
 // Routes
 const initWebRoute = (app) => {
@@ -62,6 +67,28 @@ const initWebRoute = (app) => {
     "/upload-profile-pic",
     upload.single("profile_pic"),
     homeController.handleUploadFile
+  );
+
+  // handle upload Multiple-files:
+  router.post(
+    "/upload-multiple-images",
+    (req, res, next) => {
+      uploadMultipleFiles(req, res, (err) => {
+        if (
+          err instanceof multer.MulterError &&
+          err.code === "LIMIT_UNEXPECTED_FILE"
+        ) {
+          // handle multer file limit error here
+          res.send("LIMIT_UNEXPECTED_FLIE");
+        } else if (err) {
+          res.send(err);
+        } else {
+          // make sure to call next() if all was well
+          next();
+        }
+      });
+    },
+    homeController.handleUploadMultipleFiles
   );
 
   // about Page
