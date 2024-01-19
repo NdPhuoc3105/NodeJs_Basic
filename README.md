@@ -6,13 +6,13 @@ Available Scripts
 In the project directory, you can run:
 
 - Topic:
-  - Running
-  - Routers & Express 
-  - MVC architecture
-  - REST APIs 
-  - Database (MySQL/XAMPP)
-  - Testing `APIs`
-  - MiddleWare 
+  - [Running](#running)
+  - [Routers & Express](#routers--express)
+  - [MVC architecture](#mvc-architecture)
+  - [REST APIs](#rest-apis) 
+  - [Database (MySQL/XAMPP)](#database-mysqlxampp)
+  - [Testing `APIs`](#testing-apis)
+  - [MiddleWare](#middleware) 
 
 
 
